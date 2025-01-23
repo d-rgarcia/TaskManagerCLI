@@ -4,11 +4,18 @@ using Spectre.Console;
 
 public class TaskManager
 {
-    private readonly string _filePath = "tasks.json";
+    private readonly string _filePath;
     private IList<ToDoTask> _tasks;
 
     public TaskManager()
     {
+        var directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ToDoTaskManagerCLI");
+
+        if (!Directory.Exists(directoryPath))
+            Directory.CreateDirectory(directoryPath);
+
+        _filePath = Path.Combine(directoryPath, "tasks.json");
+
         _tasks = loadTasksFromFile();
     }
 
@@ -57,6 +64,8 @@ public class TaskManager
             Description = description,
             TaskStatus = Models.TaskStatus.Pending
         });
+
+        saveTasksToFile();
     }
 
     public void CompleteTask(int id)
@@ -80,6 +89,13 @@ public class TaskManager
             return;
 
         _tasks.Remove(task);
+
+        saveTasksToFile();
+    }
+
+    public void ClearAll()
+    {
+        _tasks.Clear();
 
         saveTasksToFile();
     }
