@@ -1,67 +1,61 @@
-using Spectre.Console;
+using System.CommandLine;
 
 public static class Operation
 {
-    public static void ExecuteCommands(string[] args)
+    public static Command Add(TaskManager taskManager)
     {
-        if (args is null || args.Length == 0)
+        var argument = new Argument<string>("description", "The task description");
+        var command = new Command("add", "Adds a new task")
         {
-            Help.Print();
-            return;
-        }
+            argument
+        };
 
-        execute(args);
+        command.SetHandler(taskManager.AddTask, argument);
+
+        return command;
     }
 
-    private static void execute(string[] args)
+    public static Command List(TaskManager taskManager)
     {
-        var taskManager = new TaskManager();
+        var command = new Command("list", "List all tasks");
 
-        switch (args[0].ToLower())
+        command.SetHandler(taskManager.ListTasks);
+
+        return command;
+    }
+
+    public static Command Complete(TaskManager taskManager)
+    {
+        var argument = new Argument<int>("ID", "Task ID to be completed");
+        var command = new Command("complete", "Marks a task as completed")
         {
-            case "add":
-                if (args.Length < 2)
-                {
-                    AnsiConsole.Markup("[red]Error:[/] Task description is missing.");
-                    return;
-                }
-                taskManager.AddTask(args[1]);
-                break;
+            argument
+        };
 
-            case "list":
-                taskManager.ListTasks();
-                break;
+        command.SetHandler(taskManager.CompleteTask, argument);
 
-            case "complete":
-                if (args.Length < 2 || !int.TryParse(args[1], out int completeId))
-                {
-                    AnsiConsole.Markup("[red]Error:[/] Invalid task ID.");
-                    return;
-                }
-                taskManager.CompleteTask(completeId);
-                break;
+        return command;
+    }
 
-            case "delete":
-                if (args.Length < 2 || !int.TryParse(args[1], out int deleteId))
-                {
-                    AnsiConsole.Markup("[red]Error:[/] Invalid task ID.");
-                    return;
-                }
-                taskManager.RemoveTask(deleteId);
-                break;
-            
-            case "clear":
-                taskManager.ClearAll();
-                break;
-                
-            case "help":
-                Help.Print();
-                break;
+    public static Command Remove(TaskManager taskManager)
+    {
+        var argument = new Argument<int>("ID", "Task ID to be deleted");
+        var command = new Command("delete", "Deletes a task")
+        {
+            argument
+        };
 
-            default:
-                AnsiConsole.Markup($"[red]Unknown command:[/] {args[0]}");
-                Help.Print();
-                break;
-        }
+        command.SetHandler(taskManager.RemoveTask, argument);
+
+        return command;
+    }
+
+    public static Command Clear(TaskManager taskManager)
+    {
+        var command = new Command("clear", "Clears all tasks");
+
+        command.SetHandler(taskManager.ClearAll);
+
+        return command;
     }
 }
