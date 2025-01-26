@@ -1,5 +1,5 @@
-using System.Text.Json;
 using Models;
+using System.Text.Json;
 using Spectre.Console;
 
 public class TaskManager
@@ -126,7 +126,9 @@ public class TaskManager
         return _tasks.Count > 0 ? _tasks[^1].Id + 1 : 1;
     }
 
-    private string getTaskRowColor(ToDoTask task) => task.TaskStatus == Models.TaskStatus.Completed ? "green" : "yellow";
+    private string getTaskRowColor(ToDoTask task) => task.TaskStatus == Models.TaskStatus.Completed ?
+        "green" :
+        "yellow";
 
     #endregion
 }

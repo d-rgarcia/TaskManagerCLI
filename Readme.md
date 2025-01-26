@@ -14,7 +14,7 @@ For uninstalling:
 
  Tool help:
 
- ```
+ ```powershell
  Description:
   Task Manager CLI
 
@@ -32,5 +32,9 @@ Commands:
   complete <ID>      Marks a task as completed
   clear              Clears all tasks
 ```
+
+The file for managing the tasks is located in: ```C:\Users\Diego\AppData\Roaming\ToDoTaskManagerCLI```
+
+For testing it without installing, execute: dotnet run -- [command] [options]     
 
 Inspired on: karenpayneoregon/command-line-exploration/
