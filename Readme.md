@@ -30,10 +30,11 @@ Commands:
   list               List all tasks
   delete <ID>        Deletes a task
   complete <ID>      Marks a task as completed
+  remove-completed   Removes all compleated  tasks
   clear              Clears all tasks
 ```
 
-The file for managing the tasks is located in: ```C:\Users\Diego\AppData\Roaming\ToDoTaskManagerCLI```
+The file for managing the tasks is located in: ```C:\Users\YourUser\AppData\Roaming\ToDoTaskManagerCLI```
 
 For testing it without installing, execute: dotnet run -- [command] [options]     
 
