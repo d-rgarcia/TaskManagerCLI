@@ -1,6 +1,6 @@
 using Models;
-using System.Text.Json;
 using Spectre.Console;
+using System.Text.Json;
 
 public class TaskManager
 {
@@ -89,6 +89,17 @@ public class TaskManager
             return;
 
         _tasks.Remove(task);
+
+        saveTasksToFile();
+    }
+
+    public void RemoveCompletedTasks()
+    {
+        var completedTasks = _tasks.Where(t => t.TaskStatus == Models.TaskStatus.Completed).ToList();
+        foreach (var task in completedTasks)
+        {
+            _tasks.Remove(task);
+        }
 
         saveTasksToFile();
     }

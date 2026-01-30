@@ -50,6 +50,15 @@ public static class Operation
         return command;
     }
 
+    public static Command RemoveCompleted(TaskManager taskManager)
+    {
+        var command = new Command("remove-completed", "Removes all compleated tasks");
+
+        command.SetHandler(taskManager.RemoveCompletedTasks);
+
+        return command;
+    }
+
     public static Command Clear(TaskManager taskManager)
     {
         var command = new Command("clear", "Clears all tasks");

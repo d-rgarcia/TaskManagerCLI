@@ -14,6 +14,7 @@ internal class Program
         rootCommand.AddCommand(Operation.List(taskManager));
         rootCommand.AddCommand(Operation.Remove(taskManager));
         rootCommand.AddCommand(Operation.Complete(taskManager));
+        rootCommand.AddCommand(Operation.RemoveCompleted(taskManager));
         rootCommand.AddCommand(Operation.Clear(taskManager));
 
         var parser = new CommandLineBuilder(rootCommand)
