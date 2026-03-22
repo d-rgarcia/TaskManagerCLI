@@ -17,11 +17,9 @@ internal class Program
         rootCommand.AddCommand(Operation.RemoveCompleted(taskManager));
         rootCommand.AddCommand(Operation.Clear(taskManager));
 
+        taskManager.NotifyTasksDueToday();
+
         var parser = new CommandLineBuilder(rootCommand)
-            .AddMiddleware(async (context, next) =>
-            {
-                await next(context);
-            })
             .UseDefaults()
             .Build();
 

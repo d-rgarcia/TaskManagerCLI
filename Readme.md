@@ -26,13 +26,15 @@ Options:
   -?, -h, --help  Show help and usage information
 
 Commands:
-  add <description>  Adds a new task
+  add <description> <dueDate>  Adds a new task and optionally specifies a target date (DD/MM/YYYY)
   list               List all tasks
   delete <ID>        Deletes a task
   complete <ID>      Marks a task as completed
   remove-completed   Removes all compleated  tasks
   clear              Clears all tasks
 ```
+
+When a due date is specified, the system sends a notification each time the "task" command is called for each of the pending tasks with a due date that expires today or has already expired.
 
 The file for managing the tasks is located in: ```C:\Users\YourUser\AppData\Roaming\ToDoTaskManagerCLI```
 

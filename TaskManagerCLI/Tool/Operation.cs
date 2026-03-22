@@ -6,12 +6,14 @@ public static class Operation
     public static Command Add(TaskManager taskManager)
     {
         var argument = new Argument<string>("description", "The task description");
+        var dueOption = new Option<string?>("--due", "Expected due date (DD/MM/YYYY)");
         var command = new Command("add", "Adds a new task")
         {
-            argument
+            argument,
+            dueOption
         };
 
-        command.SetHandler(taskManager.AddTask, argument);
+        command.SetHandler(taskManager.AddTask, argument, dueOption);
 
         return command;
     }

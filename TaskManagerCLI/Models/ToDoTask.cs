@@ -6,6 +6,7 @@ namespace Models
         public TaskStatus TaskStatus { get; set; }
         public string Description { get; set; } = string.Empty;
         public string CompletedAt { get; set; } = string.Empty;
+        public string? DueDate { get; set; }
     }
 
     public enum TaskStatus
