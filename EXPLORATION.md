@@ -27,22 +27,22 @@ TaskManagerCLI/
 
 ## Identified Issues
 
-### 1. Frágil generación de IDs (`Core/TaskManager.cs:125`) — **Prioritario**
+### 1. ~~Frágil generación de IDs (`Core/TaskManager.cs:125`)~~ ✅ Fixed
 ```csharp
-// Actual — asume que el último elemento tiene el ID más alto
+// Antes — asumía que el último elemento tiene el ID más alto
 return _tasks.Count > 0 ? _tasks[^1].Id + 1 : 1;
 
-// Correcto — funciona incluso tras eliminar tareas
-return _tasks.Count > 0 ? _tasks.Max(t => t.Id) + 1 : 1;
+// Ahora — funciona incluso tras eliminar tareas
+return _tasks.Any() ? _tasks.Max(t => t.Id) + 1 : 1;
 ```
-Si se eliminan tareas intermedias y se reordenan en disco, el índice `[^1]` puede devolver un ID menor al máximo existente, causando duplicados.
 
 ### 2. Middleware vacío (`Program.cs:20-23`)
 El bloque de middleware no hace nada. Es un buen punto para añadir manejo global de excepciones en el futuro, pero actualmente genera ruido.
 
-### 3. `clear` sin confirmación (`Tool/Operation.cs:53-59`)
-El comando `clear` elimina todas las tareas sin ningún prompt de confirmación. Riesgo de pérdida de datos accidental.
+### 3. ~~`clear` sin confirmación (`Tool/Operation.cs:53-59`)~~ ✅ Fixed
+Añadido `AnsiConsole.Confirm` con `defaultValue: false` antes de ejecutar `ClearAll()`.
+El archivo también necesitaba `using Spectre.Console;` (ausente).
 
-## Recommended Next Action
+## Build Status
 
-Fix ID generation: cambiar `_tasks[^1].Id + 1` por `_tasks.Max(t => t.Id) + 1` en `Core/TaskManager.cs:125`.
+`dotnet build` — **0 errores, 0 advertencias** ✅

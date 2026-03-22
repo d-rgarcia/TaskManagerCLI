@@ -123,7 +123,7 @@ public class TaskManager
 
     private int generateNextId()
     {
-        return _tasks.Count > 0 ? _tasks[^1].Id + 1 : 1;
+        return _tasks.Any() ? _tasks.Max(t => t.Id) + 1 : 1;
     }
 
     private string getTaskRowColor(ToDoTask task) => task.TaskStatus == Models.TaskStatus.Completed ?
