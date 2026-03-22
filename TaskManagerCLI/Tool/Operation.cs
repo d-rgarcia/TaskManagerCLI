@@ -1,3 +1,4 @@
+using Spectre.Console;
 using System.CommandLine;
 
 public static class Operation
@@ -54,7 +55,11 @@ public static class Operation
     {
         var command = new Command("remove-completed", "Removes all compleated tasks");
 
-        command.SetHandler(taskManager.RemoveCompletedTasks);
+        command.SetHandler(() =>
+        {
+            if (AnsiConsole.Confirm("[red]Are you sure you want to delete all completed tasks?[/]", defaultValue: false))
+                taskManager.RemoveCompletedTasks();
+        });
 
         return command;
     }
@@ -63,7 +68,11 @@ public static class Operation
     {
         var command = new Command("clear", "Clears all tasks");
 
-        command.SetHandler(taskManager.ClearAll);
+        command.SetHandler(() =>
+        {
+            if (AnsiConsole.Confirm("[red]Are you sure you want to delete all tasks?[/]", defaultValue: false))
+                taskManager.ClearAll();
+        });
 
         return command;
     }
