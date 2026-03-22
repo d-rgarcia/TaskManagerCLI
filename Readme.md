@@ -26,7 +26,7 @@ Options:
   -?, -h, --help  Show help and usage information
 
 Commands:
-  add <description> <dueDate>  Adds a new task and optionally specifies a target date (DD/MM/YYYY)
+  add <description> --due <dueDate>  Adds a new task and optionally specifies a target date (DD/MM/YYYY)
   list               List all tasks
   delete <ID>        Deletes a task
   complete <ID>      Marks a task as completed

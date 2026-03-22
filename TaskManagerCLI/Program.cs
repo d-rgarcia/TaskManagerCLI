@@ -17,12 +17,12 @@ internal class Program
         rootCommand.AddCommand(Operation.RemoveCompleted(taskManager));
         rootCommand.AddCommand(Operation.Clear(taskManager));
 
-        taskManager.NotifyTasksDueToday();
-
         var parser = new CommandLineBuilder(rootCommand)
             .UseDefaults()
             .Build();
 
         await parser.InvokeAsync(args);
+
+        taskManager.NotifyTasksDueToday();
     }
 }
